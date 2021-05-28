@@ -1,0 +1,19 @@
+{
+  "name": "sound-specter-api",
+  "version": "1.0.0",
+  "description": "GraphQL api for sound specter",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": {
+    "name": "matthew-js-porter",
+    "email": "matthew.js.porter@jpmchase.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.25.0",
+    "apollo-server-lambda": "^2.25.0",
+    "graphql": "^15.5.0"
+  }
+}
