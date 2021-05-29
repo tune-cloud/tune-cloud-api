@@ -28,7 +28,8 @@ BeforeAll(()=>{
 
     client = new ApolloClient({
         link: new HttpLink({ uri: config.get('graphQL.url'), fetch}),
-        cache: new InMemoryCache()
+        cache: new InMemoryCache(),
+        cors: true,
     });
 });
 
