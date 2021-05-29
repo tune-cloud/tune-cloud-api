@@ -4,7 +4,7 @@
   "description": "GraphQL api for sound specter",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha ."
+    "test": "mocha"
   },
   "keywords": [],
   "author": {
