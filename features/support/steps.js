@@ -46,6 +46,17 @@ Given('an artist name', ()=>{
    `
 });
 
+Given('search close to the artist', ()=>{
+    query = gql`
+        query {
+            artists(search: "Front Bottoms") {
+                id
+                name
+            }
+        }
+    `
+});
+
 When('searching for an artist', ()=>{
    queryResult = client.query({
        query: query
@@ -58,3 +69,10 @@ Then('the artist is returned', async ()=>{
     expect(artists[0].name).to.equal('The Beatles');
     expect(artists[0].id).to.not.be.null;
 })
+
+Then('an artist matching the search is returned', async ()=>{
+    const result = await queryResult;
+    const artists = result.data.artists;
+    expect(artists[0].name).to.equal('The Front Bottoms');
+    expect(artists[0].id).to.not.be.null;
+});
