@@ -4,7 +4,8 @@
   "description": "GraphQL api for sound specter",
   "scripts": {
     "start": "node server.js",
-    "test": "nyc --reporter=lcov --reporter=html --reporter=text mocha"
+    "test": "nyc --reporter=lcov --reporter=html --reporter=text mocha",
+    "test:e2e" : "./node_modules/.bin/cucumber-js"
   },
   "keywords": [],
   "author": {
@@ -15,11 +16,14 @@
   "dependencies": {
     "apollo-server": "^2.25.0",
     "apollo-server-lambda": "^2.25.0",
-    "genius-lyrics": "^4.2.9",
-    "graphql": "^15.5.0"
+    "genius-lyrics": "^4.2.9"
   },
   "devDependencies": {
+    "@apollo/client": "^3.3.19",
+    "@cucumber/cucumber": "^7.2.1",
     "chai": "^4.3.4",
+    "cross-fetch": "^3.1.4",
+    "graphql": "^15.5.0",
     "mocha": "^8.4.0",
     "nyc": "^15.1.0",
     "sinon": "^11.1.1"
