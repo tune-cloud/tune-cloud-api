@@ -1,0 +1,27 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-WS-1296835:
+    - apollo-server > apollo-server-core > subscriptions-transport-ws > ws:
+        reason: None given
+        expires: '2021-06-28T12:48:21.945Z'
+    - apollo-server-lambda > apollo-server-core > subscriptions-transport-ws > ws:
+        reason: None given
+        expires: '2021-06-28T12:48:21.945Z'
+    - apollo-server > apollo-server-express > subscriptions-transport-ws > ws:
+        reason: None given
+        expires: '2021-06-28T12:48:21.945Z'
+    - apollo-server > apollo-server-express > apollo-server-core > subscriptions-transport-ws > ws:
+        reason: None given
+        expires: '2021-06-28T12:48:21.945Z'
+    - apollo-server > apollo-server-core > ws:
+        reason: None given
+        expires: '2021-06-28T12:48:21.945Z'
+    - apollo-server-lambda > apollo-server-core > ws:
+        reason: None given
+        expires: '2021-06-28T12:48:21.945Z'
+    - apollo-server > apollo-server-express > apollo-server-core > ws:
+        reason: None given
+        expires: '2021-06-28T12:48:21.945Z'
+patch: {}
