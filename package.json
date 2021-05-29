@@ -4,7 +4,7 @@
   "description": "GraphQL api for sound specter",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha"
+    "test": "nyc --reporter=lcov --reporter=html --reporter=text mocha"
   },
   "keywords": [],
   "author": {
@@ -21,6 +21,7 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "mocha": "^8.4.0",
+    "nyc": "^15.1.0",
     "sinon": "^11.1.1"
   }
 }
