@@ -19,7 +19,8 @@ BeforeAll(()=>{
 
         playground: {
             endpoint: "/dev/graphql"
-        }
+        },
+        cors: true
     });
     server.listen(4000, ()=>{
         console.log('server started on port 4000');
@@ -28,8 +29,7 @@ BeforeAll(()=>{
 
     client = new ApolloClient({
         link: new HttpLink({ uri: config.get('graphQL.url'), fetch}),
-        cache: new InMemoryCache(),
-        cors: true,
+        cache: new InMemoryCache()
     });
 });
 
