@@ -1,3 +1,8 @@
 type Query {
-    hello: String
+    artists(search: String!): [Artist]
+}
+
+type Artist {
+    id: String
+    name: String
 }
