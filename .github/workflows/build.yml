@@ -81,4 +81,6 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy
-        run: serverless deploy
+        run: |
+          npm install -g serverless
+          serverless deploy
