@@ -4,6 +4,7 @@ const { ApolloServer } = require('apollo-server');
 const { ApolloClient, InMemoryCache, gql, HttpLink } = require('@apollo/client');
 const { readFileSync } = require('fs');
 const fetch = require('cross-fetch');
+const config = require('config');
 const resolvers = require('../../resolvers');
 const typeDefs = readFileSync('./schema.graphql').toString('utf-8')
 
@@ -26,7 +27,7 @@ BeforeAll(()=>{
     });
 
     client = new ApolloClient({
-        link: new HttpLink({ uri: 'http://localhost:4000/', fetch}),
+        link: new HttpLink({ uri: config.get('graphQL.url'), fetch}),
         cache: new InMemoryCache()
     });
 });
