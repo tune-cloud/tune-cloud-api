@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "GraphQL api for sound specter",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha ."
   },
   "keywords": [],
   "author": {
@@ -14,6 +15,12 @@
   "dependencies": {
     "apollo-server": "^2.25.0",
     "apollo-server-lambda": "^2.25.0",
+    "genius-lyrics": "^4.2.9",
     "graphql": "^15.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
+    "sinon": "^11.1.1"
   }
 }
