@@ -1,17 +1,23 @@
+const AWS = require('aws-sdk');
 const Genius = require("genius-lyrics");
 const ArtistService = require('./artists/artist-service');
+const SecretsManager = require('./secrets/secrets-manager');
+
+const client = new AWS.SecretsManager({
+    region: "us-east-1"
+});
+const secretsManager = new SecretsManager(client);
 
 const artistService = (async ()=>{
-    const secret = await require('./secret/secret')();
-    return new ArtistService(new Genius.Client(JSON.parse(secret).GENIUS_API_KEY));
+    const apiKey = await secretsManager.getSecrets("genius/apiKey")
+    return new ArtistService(new Genius.Client(apiKey.GENIUS_API_KEY));
 })();
 
 
 module.exports = {
     Query: {
         async artists(parent, args, context, info) {
-            const service = await artistService;
-            return service.find(args.search).then((result) => {
+            return (await artistService).find(args.search).then((result) => {
                 console.log(result);
                 return result;
             });
