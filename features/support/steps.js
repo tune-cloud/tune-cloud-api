@@ -31,18 +31,6 @@ BeforeAll(()=>{
         link: new HttpLink({ uri: config.get('graphQL.url'), fetch}),
         cache: new InMemoryCache()
     });
-
-    fetch('http://localhost:4000', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        body: `
-        {"operationName":null,"variables":{},"query":"{\\n  artists(search: \\"Em\\") {\\n    id\\n    name\\n  }\\n}\\n"}
-        `
-    }).then(response=>response.text())
-    .then(data=>{ console.log(data); })
 });
 
 AfterAll(()=>{
