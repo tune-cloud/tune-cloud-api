@@ -2,6 +2,11 @@ service: apollo-lambda
 provider:
   name: aws
   runtime: nodejs12.x
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action: secretsmanager:GetSecretValue
+      Resource: '*'
+
 functions:
   graphql:
     handler: graphql.graphqlHandler
