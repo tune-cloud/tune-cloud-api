@@ -1,18 +1,20 @@
 const Genius = require("genius-lyrics");
-const Client = new Genius.Client();
 const ArtistService = require('./artists/artist-service');
 
-const artistService = new ArtistService(Client);
+const artistService = (async ()=>{
+    const secret = await require('./secret/secret')();
+    return new ArtistService(new Genius.Client(JSON.parse(secret).GENIUS_API_KEY));
+})();
 
-const resolvers = {
+
+module.exports = {
     Query: {
-        artists(parent, args, context, info) {
-            return artistService.find(args.search).then((result) => {
+        async artists(parent, args, context, info) {
+            const service = await artistService;
+            return service.find(args.search).then((result) => {
                 console.log(result);
                 return result;
             });
         },
     },
 };
-
-module.exports = resolvers;
