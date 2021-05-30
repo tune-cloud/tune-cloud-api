@@ -18,5 +18,13 @@ describe('SecretsManager', ()=>{
             const secretsManager = new SecretsManager(client);
             return expect(secretsManager.getSecrets('secretID')).to.eventually.deep.equal(secret);
         });
+
+        it('Should throw an error if failed to get secret', ()=>{
+            const client = new AWS.SecretsManager();
+            const error = new Error();
+            sinon.stub(client, 'getSecretValue').yields(error, null)
+            const secretsManager = new SecretsManager(client);
+            return expect(secretsManager.getSecrets('secretID')).to.eventually.rejectedWith(error);
+        });
     })
 })
