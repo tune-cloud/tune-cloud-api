@@ -1,8 +1,15 @@
 type Query {
     artists(search: String!): [Artist]
+    songs(artistId: Int) : [Song]
 }
 
 type Artist {
     id: String
     name: String
+}
+
+type Song {
+    id: Int
+    title: String
+    artist: Artist
 }
