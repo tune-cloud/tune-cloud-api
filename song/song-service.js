@@ -35,7 +35,7 @@ class SongService {
 
   async _fetchPage(artist, page) {
     try {
-      return await artist.songs({per_page: 50, page: page});
+      return await artist.songs({per_page: 50, page: page, sort: 'popularity'});
     } catch (e) {
       if (e.message === Constants.NO_RESULT) {
         return [];
