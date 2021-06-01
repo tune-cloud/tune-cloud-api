@@ -6,8 +6,11 @@ class SongService {
   }
 
   async getSongs(artistId) {
+    console.info(`Fetching songs for artist. artistId=${artistId}`);
     const songs = await this._fetchSongs(artistId);
-    console.log(songs);
+    // eslint-disable-next-line max-len
+    console.info(`Completed song fetch for artist. artistId=${artistId}, results=${songs.length}`);
+
     return songs.map((song) =>{
       return {
         id: song.id,
@@ -21,12 +24,16 @@ class SongService {
   }
 
   async _fetchSongs(artistId) {
+    console.info(`Fetching artist info. artistId=${artistId}`);
     const artist = await this.client.artists.get(artistId);
+    console.info(`Completed fetching artist info. artistId=${artistId}`);
     const songs = [];
     let pageNumber = 1;
     let page = null;
     while (page == null || page.length !== 0) {
+      console.info(`Fetching songs. artistId=${artistId}, page=${pageNumber}`);
       page = await this._fetchPage(artist, pageNumber);
+      console.info(`Completed page fetch. results=${page.length}`);
       songs.push(...page);
       pageNumber++;
     }

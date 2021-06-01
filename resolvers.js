@@ -24,8 +24,13 @@ module.exports = {
   Query: {
     async artists(parent, args, context, info) {
       return (await artistService).find(args.search).then((result) => {
-        console.log(result);
         return result;
+      }).catch((e)=>{
+        const error =
+          new Error(`error searching for artist. query=${args.search}`);
+        console.error(error);
+        console.error(e);
+        throw error;
       });
     },
     async songs(parent, args, context, info) {
@@ -36,8 +41,13 @@ module.exports = {
                     .includes(song.artist.id))
                 .filter((song) => !args.filter?.songs || args.filter.songs
                     .includes(song.id));
-            console.log(filteredResults);
             return filteredResults;
+          }).catch((e) => {
+            const error =
+              new Error(`error getting songs for artist=${args.artistId}`);
+            console.error(error);
+            console.error(e);
+            throw error;
           });
     },
   },
