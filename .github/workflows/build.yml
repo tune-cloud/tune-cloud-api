@@ -50,7 +50,7 @@ jobs:
 
       - name: Check Sonar Status
         run: |
-          status=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=sound-specter_sound-specter-api)
+          status=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=tune-cloud_tune-cloud-api)
           echo $status | jq '.'
           status=$(echo $status | jq '.projectStatus.status')
           test '"OK"' = $status

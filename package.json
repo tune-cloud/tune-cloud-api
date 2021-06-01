@@ -1,7 +1,7 @@
 {
-  "name": "sound-specter-api",
+  "name": "tune-cloud-api",
   "version": "1.0.0",
-  "description": "GraphQL api for sound specter",
+  "description": "GraphQL api for Tune Cloud",
   "scripts": {
     "start": "node server.js",
     "test": "nyc --reporter=lcov --reporter=html --reporter=text mocha",

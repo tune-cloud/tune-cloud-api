@@ -1,2 +1,2 @@
-# sound-specter-api
-GraphQL api for sound specter
+# tune-cloud-api
+GraphQL api for Tune Cloud
