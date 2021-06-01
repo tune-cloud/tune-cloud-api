@@ -29,10 +29,14 @@ module.exports = {
       });
     },
     async songs(parent, args, context, info) {
-      return (await songService).getSongs(args.artistId).then((result) => {
-        console.log(result);
-        return result;
-      });
+      return (await songService).getSongs(args.artistId)
+          .then((result) => {
+            const filteredResults = result
+                .filter((song) => !args.filter?.songs || args.filter.songs
+                    .includes(song.id));
+            console.log(filteredResults);
+            return filteredResults;
+          });
     },
   },
 };

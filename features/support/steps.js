@@ -14,7 +14,7 @@ let client;
 let query;
 let queryResult;
 let artistId;
-
+let filter = null;
 setDefaultTimeout(300 * 1000);
 
 BeforeAll(()=>{
@@ -80,6 +80,28 @@ Given('a valid artist id', async ()=>{
   artistId = (await queryResult).data.artists[0].id;
 });
 
+Given('a song filter', async ()=>{
+  const query = gql`
+        query {
+            songs(artistId: ${artistId}) {
+                id
+                title
+                artist {
+                    id
+                    name
+                }
+            }
+        }
+    `;
+  const queryResult = await client.query({
+    query: query,
+  });
+
+  filter = {
+    songs: queryResult.data.songs.slice(0, 2).map((song) => song.id),
+  };
+});
+
 When('searching for an artist', ()=>{
   queryResult = client.query({
     query: query,
@@ -87,9 +109,12 @@ When('searching for an artist', ()=>{
 });
 
 When('getting songs', ()=>{
+  const songs = filter?.songs ? `[${filter.songs.toString()}]` : null;
   const query = gql`
         query {
-            songs(artistId: ${artistId}) {
+            songs(artistId: ${artistId}, filter: {
+                songs: ${songs}
+            }) {
                 id
                 title
                 artist {
@@ -126,4 +151,11 @@ Then('songs are returned', async ()=>{
   expect(songs[0].title).to.not.be.null;
   expect(songs[0].artist.id).to.not.be.null;
   expect(songs[0].artist.name).to.equal('The Front Bottoms');
+});
+
+Then('a filtered song list is returned', async ()=> {
+  const result = await queryResult;
+  const songs = result.data.songs;
+
+  expect(songs.length).to.be.equal(2);
 });
