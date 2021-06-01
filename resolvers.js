@@ -32,6 +32,8 @@ module.exports = {
       return (await songService).getSongs(args.artistId)
           .then((result) => {
             const filteredResults = result
+                .filter((song) => !args.filter?.artists || args.filter.artists
+                    .includes(song.artist.id))
                 .filter((song) => !args.filter?.songs || args.filter.songs
                     .includes(song.id));
             console.log(filteredResults);

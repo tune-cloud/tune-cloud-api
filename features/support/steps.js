@@ -80,6 +80,22 @@ Given('a valid artist id', async ()=>{
   artistId = (await queryResult).data.artists[0].id;
 });
 
+Given('a valid artist id with multiple bands', async ()=>{
+  const query = gql`
+    query {
+      artists(search: "Kevin Devine") {
+        id
+        name
+      }
+    }
+  `;
+  const queryResult = client.query({
+    query: query,
+  });
+
+  artistId = (await queryResult).data.artists[0].id;
+});
+
 Given('a song filter', async ()=>{
   const query = gql`
         query {
@@ -102,6 +118,12 @@ Given('a song filter', async ()=>{
   };
 });
 
+Given('an artist filter', async ()=>{
+  filter = {
+    artits: [artistId],
+  };
+});
+
 When('searching for an artist', ()=>{
   queryResult = client.query({
     query: query,
@@ -110,10 +132,12 @@ When('searching for an artist', ()=>{
 
 When('getting songs', ()=>{
   const songs = filter?.songs ? `[${filter.songs.toString()}]` : null;
+  const artists = filter?.artits ? `[${filter.artits.toString()}]` : null;
   const query = gql`
         query {
             songs(artistId: ${artistId}, filter: {
-                songs: ${songs}
+                songs: ${songs},
+                artists: ${artists}
             }) {
                 id
                 title
@@ -158,4 +182,13 @@ Then('a filtered song list is returned', async ()=> {
   const songs = result.data.songs;
 
   expect(songs.length).to.be.equal(2);
+});
+
+Then('a song list filtered on artist is returned', async ()=>{
+  const result = await queryResult;
+  const songs = result.data.songs;
+
+  expect(songs.map((song)=>song.artist.id)
+      .every((artist)=> expect(artist).to.be.equal(artistId)))
+      .to.be.equal(true);
 });

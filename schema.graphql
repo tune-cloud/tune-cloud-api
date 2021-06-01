@@ -16,4 +16,5 @@ type Song {
 
 input SongFilter {
     songs: [Int]
+    artists: [Int]
 }

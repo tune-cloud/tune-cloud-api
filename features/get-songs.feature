@@ -9,3 +9,9 @@ Feature: Get Songs
     And a song filter
     When getting songs
     Then a filtered song list is returned
+
+  Scenario: Successfully get songs with an artist filter
+    Given a valid artist id with multiple bands
+    And an artist filter
+    When getting songs
+    Then a song list filtered on artist is returned
