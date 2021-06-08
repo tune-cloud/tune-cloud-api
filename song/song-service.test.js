@@ -69,6 +69,29 @@ describe('SongService', ()=> {
 
       expect(songs).to.deep.equal(expectedSongs);
     });
+    it('should fetch only the desired page size', async ()=>{
+      const Client = sinon.mock(new Genius.Client());
+      const artistClient = new Genius.ArtistsClient();
+      Client.artists = artistClient;
+
+      const artist = new Genius.Artist({}, '1234', null, {});
+      sinon.stub(artistClient, 'get').returns(artist);
+
+      const expectedSongs = [{
+        id: 'id',
+        title: 'title',
+      }];
+      const songsStub = sinon.stub(artist, 'songs').onCall(0)
+          .returns(expectedSongs).onCall(1)
+          .throws(new Error(Genius.Constants.NO_RESULT));
+
+      const songService = new SongService(Client);
+      const songs = await songService._fetchSongs('1234', 1);
+
+      expect(songs).to.deep.equal(expectedSongs);
+      expect(songsStub.getCalls()[0].args).to.deep.equal([{per_page: 1,
+        page: 1, sort: 'popularity'}]);
+    });
   });
 
   describe('getSongs', ()=> {
