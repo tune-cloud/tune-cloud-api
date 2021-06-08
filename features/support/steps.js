@@ -7,6 +7,7 @@ const {readFileSync} = require('fs');
 const fetch = require('cross-fetch');
 const config = require('config');
 const resolvers = require('../../resolvers');
+const {Before} = require('@cucumber/cucumber');
 const typeDefs = readFileSync('./schema.graphql').toString('utf-8');
 
 let server;
@@ -14,7 +15,7 @@ let client;
 let query;
 let queryResult;
 let artistId;
-let filter = null;
+let filter;
 setDefaultTimeout(300 * 1000);
 
 BeforeAll(()=>{
@@ -36,6 +37,13 @@ BeforeAll(()=>{
     link: new HttpLink({uri: config.get('graphQL.url'), fetch}),
     cache: new InMemoryCache(),
   });
+});
+
+Before(()=>{
+  query = null;
+  queryResult = null;
+  artistId = null;
+  filter = null;
 });
 
 AfterAll(()=>{
@@ -153,6 +161,29 @@ When('getting songs', ()=>{
   });
 });
 
+When(/^getting top (.*) songs$/, (numberOfSongs)=>{
+  const songs = filter?.songs ? `[${filter.songs.toString()}]` : null;
+  const artists = filter?.artits ? `[${filter.artits.toString()}]` : null;
+  const query = gql`
+      query {
+          songs(artistId: ${artistId}, top: ${numberOfSongs} filter: {
+              songs: ${songs},
+              artists: ${artists}
+          }) {
+              id
+              title
+              artist {
+                  id
+                  name
+              }
+          }
+      }
+  `;
+  queryResult = client.query({
+    query: query,
+  });
+});
+
 Then('the artist is returned', async ()=>{
   const result = await queryResult;
   const artists = result.data.artists;
@@ -191,4 +222,10 @@ Then('a song list filtered on artist is returned', async ()=>{
   expect(songs.map((song)=>song.artist.id)
       .every((artist)=> expect(artist).to.be.equal(artistId)))
       .to.be.equal(true);
+});
+
+Then(/^(.*) songs are returned$/, async (numberOfSongs)=>{
+  const result = await queryResult;
+  const songs = result.data.songs;
+  expect(songs.length).to.be.equal(parseInt(numberOfSongs));
 });

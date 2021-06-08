@@ -1,6 +1,6 @@
 type Query {
     artists(search: String!): [Artist]
-    songs(artistId: Int!, filter: SongFilter) : [Song]
+    songs(artistId: Int!, top: Int, filter: SongFilter) : [Song]
 }
 
 type Artist {

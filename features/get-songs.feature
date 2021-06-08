@@ -15,3 +15,14 @@ Feature: Get Songs
     And an artist filter
     When getting songs
     Then a song list filtered on artist is returned
+
+  Scenario Outline: Successfully get songs top X number of songs
+    Given a valid artist id
+    When getting top <number of songs> songs
+    Then <number of songs> songs are returned
+
+    Examples:
+    | number of songs |
+    | 1               |
+    | 5               |
+    | 111             |

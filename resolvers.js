@@ -34,7 +34,7 @@ module.exports = {
       });
     },
     async songs(parent, args, context, info) {
-      return (await songService).getSongs(args.artistId)
+      return (await songService).getSongs(args.artistId, args.top)
           .then((result) => {
             const filteredResults = result
                 .filter((song) => !args.filter?.artists || args.filter.artists
