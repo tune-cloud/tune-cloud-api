@@ -112,4 +112,49 @@ describe('SongService', ()=> {
       expect(songs).to.deep.equal(expectedSongs);
     });
   });
+
+  describe('_filter', ()=>{
+    it('should filter on artistId', ()=>{
+      const songs = [{
+        title: 'title',
+        artist: {
+          id: 1,
+        },
+      },
+      {
+        title: 'title',
+        artist: {
+          id: 2,
+        },
+      }];
+
+      const expectedSongs = [{
+        title: 'title',
+        artist: {
+          id: 1,
+        }}];
+
+      const filteredSongs = songService._filter(songs, {artists: [1]});
+      expect(filteredSongs).to.deep.equal(expectedSongs);
+    });
+
+    it('should filter on songId', ()=>{
+      const songs = [{
+        title: 'title',
+        id: 1,
+      },
+      {
+        title: 'title',
+        id: 2,
+      }];
+
+      const expectedSongs = [{
+        title: 'title',
+        id: 1,
+      }];
+
+      const filteredSongs = songService._filter(songs, {songs: [1]});
+      expect(filteredSongs).to.deep.equal(expectedSongs);
+    });
+  });
 });

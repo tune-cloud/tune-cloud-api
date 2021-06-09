@@ -6,9 +6,9 @@ class SongService {
     SongService.MAX_PAGE_SIZE = 50;
   }
 
-  async getSongs(artistId, numberOfSongs) {
+  async getSongs(artistId, numberOfSongs, filter) {
     console.info(`Fetching songs for artist. artistId=${artistId}`);
-    const songs = await this._fetchSongs(artistId, numberOfSongs);
+    const songs = await this._fetchSongs(artistId, numberOfSongs, filter);
     // eslint-disable-next-line max-len
     console.info(`Completed song fetch for artist. artistId=${artistId}, results=${songs.length}`);
 
@@ -24,7 +24,7 @@ class SongService {
     });
   }
 
-  async _fetchSongs(artistId, numberOfSongs) {
+  async _fetchSongs(artistId, numberOfSongs, filter) {
     console.info(`Fetching artist info. artistId=${artistId}`);
     const artist = await this.client.artists.get(artistId);
     console.info(`Completed fetching artist info. artistId=${artistId}`);
@@ -36,7 +36,7 @@ class SongService {
           ._calculatePageSize(numberOfSongs, songs);
       // eslint-disable-next-line max-len
       console.info(`Fetching songs. artistId=${artistId}, page=${pageNumber}, numberOfSongsToFetch=${numberOfSongsToFetch}`);
-      page = await this._fetchPage(artist, pageNumber, numberOfSongsToFetch);
+      page = await this._fetchPage(artist, pageNumber, numberOfSongsToFetch, filter);
       console.info(`Completed page fetch. results=${page?.length}`);
       songs.push(...page);
       pageNumber++;
@@ -58,10 +58,11 @@ class SongService {
     }
   }
 
-  async _fetchPage(artist, page, perPage) {
+  async _fetchPage(artist, page, perPage, filter) {
     try {
-      return await artist.songs({per_page: perPage,
+      const songs = await artist.songs({per_page: perPage,
         page: page, sort: 'popularity'});
+      return this._filter(songs, filter)
     } catch (e) {
       if (e.message === Constants.NO_RESULT) {
         return [];
@@ -69,6 +70,13 @@ class SongService {
         throw e;
       }
     }
+  }
+
+  _filter(songs, filter) {
+    return songs.filter((song) => !filter?.artists || filter.artists
+        .includes(song.artist.id))
+        .filter((song) => !filter?.songs || filter.songs
+            .includes(song.id));
   }
 }
 

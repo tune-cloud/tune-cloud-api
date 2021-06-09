@@ -34,15 +34,8 @@ module.exports = {
       });
     },
     async songs(parent, args, context, info) {
-      return (await songService).getSongs(args.artistId, args.top)
-          .then((result) => {
-            const filteredResults = result
-                .filter((song) => !args.filter?.artists || args.filter.artists
-                    .includes(song.artist.id))
-                .filter((song) => !args.filter?.songs || args.filter.songs
-                    .includes(song.id));
-            return filteredResults;
-          }).catch((e) => {
+      return (await songService).getSongs(args.artistId, args.top, args.filter)
+          .catch((e) => {
             const error =
               new Error(`error getting songs for artist=${args.artistId}`);
             console.error(error);
