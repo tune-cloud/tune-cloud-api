@@ -36,7 +36,8 @@ class SongService {
           ._calculatePageSize(numberOfSongs, songs);
       // eslint-disable-next-line max-len
       console.info(`Fetching songs. artistId=${artistId}, page=${pageNumber}, numberOfSongsToFetch=${numberOfSongsToFetch}`);
-      page = await this._fetchPage(artist, pageNumber, numberOfSongsToFetch, filter);
+      page = await this._fetchPage(artist, pageNumber,
+          numberOfSongsToFetch, filter);
       console.info(`Completed page fetch. results=${page?.length}`);
       songs.push(...page);
       pageNumber++;
@@ -62,7 +63,7 @@ class SongService {
     try {
       const songs = await artist.songs({per_page: perPage,
         page: page, sort: 'popularity'});
-      return this._filter(songs, filter)
+      return this._filter(songs, filter);
     } catch (e) {
       if (e.message === Constants.NO_RESULT) {
         return [];
