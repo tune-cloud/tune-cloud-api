@@ -19,7 +19,7 @@
     "apollo-server-lambda": "2.25.1",
     "aws-sdk": "2.931.0",
     "genius-lyrics": "4.2.9",
-    "graphql": "15.5.0"
+    "graphql": "15.5.1"
   },
   "devDependencies": {
     "@apollo/client": "3.3.20",
