@@ -102,6 +102,7 @@ describe('SongService', ()=> {
         artist: {
           id: 'id',
           name: 'name',
+          thumbnail: 'https://imgur.jpg',
         },
       }];
       sinon.stub(artist, 'songs').onCall(0).returns(expectedSongs)

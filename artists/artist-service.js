@@ -7,7 +7,8 @@ class ArtistService {
     console.info(`Starting search for artist. query=${searchQuery}`);
     const songs = this.client.songs.search(searchQuery);
     const artists = (await songs).map((song) => {
-      return {id: song.artist.id, name: song.artist.name};
+      return {id: song.artist.id, name: song.artist.name,
+        thumbnail: song.artist.thumbnail};
     });
 
     const resultsWithoutDuplicates =

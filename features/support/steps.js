@@ -196,6 +196,7 @@ Then('an artist matching the search is returned', async ()=>{
   const artists = result.data.artists;
   expect(artists[0].name).to.equal('The Front Bottoms');
   expect(artists[0].id).to.not.be.null;
+  expect(artists[0].thumbnail).to.not.be.null;
 });
 
 Then('songs are returned', async ()=>{
@@ -205,6 +206,7 @@ Then('songs are returned', async ()=>{
   expect(songs[0].id).to.not.be.null;
   expect(songs[0].title).to.not.be.null;
   expect(songs[0].artist.id).to.not.be.null;
+  expect(songs[0].artist.thumbnail).to.not.be.null;
   expect(songs[0].artist.name).to.equal('The Front Bottoms');
 });
 

@@ -8,7 +8,7 @@ describe('ArtistService', ()=>{
     it('should find artists', async ()=>{
       const Client = sinon.mock(new Genius.Client());
       const songsClient = new Genius.SongsClient();
-      const expectedArtist = {id: 1, name: 'artist'};
+      const expectedArtist = {id: 1, name: 'artist', thumbnail: 'https://img.jpg'};
       sinon.stub(songsClient, 'search').returns([{
         name: 'song',
         artist: expectedArtist,

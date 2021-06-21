@@ -6,6 +6,7 @@ type Query {
 type Artist {
     id: String
     name: String
+    thumbnail: String
 }
 
 type Song {

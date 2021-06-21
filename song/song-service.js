@@ -19,6 +19,7 @@ class SongService {
         artist: {
           id: song.artist?.id,
           name: song.artist?.name,
+          thumbnail: song.artist?.thumbnail,
         },
       };
     });
