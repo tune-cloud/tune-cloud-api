@@ -8,9 +8,10 @@ class SongService {
 
   async getSongs(artistId, numberOfSongs, filter) {
     console.info(`Fetching songs for artist. artistId=${artistId}`);
-    const songs = await this._fetchSongs(artistId, numberOfSongs, filter);
+    const artist = await this._fetchArtistInfo(artistId);
+    const songs = await this._fetchSongs(artist, numberOfSongs, filter);
     // eslint-disable-next-line max-len
-    console.info(`Completed song fetch for artist. artistId=${artistId}, results=${songs.length}`);
+    console.info(`Completed song fetch for artist. artistId=${artistId}, artist=${artist.name}, results=${songs.length}`);
 
     return songs.map((song) =>{
       return {
@@ -25,10 +26,14 @@ class SongService {
     });
   }
 
-  async _fetchSongs(artistId, numberOfSongs, filter) {
+  async _fetchArtistInfo(artistId) {
     console.info(`Fetching artist info. artistId=${artistId}`);
     const artist = await this.client.artists.get(artistId);
     console.info(`Completed fetching artist info. artistId=${artistId}`);
+    return artist;
+  }
+
+  async _fetchSongs(artist, numberOfSongs, filter) {
     const songs = [];
     let pageNumber = 1;
     let page = null;
@@ -36,7 +41,7 @@ class SongService {
       const numberOfSongsToFetch = this
           ._calculatePageSize(numberOfSongs, songs);
       // eslint-disable-next-line max-len
-      console.info(`Fetching songs. artistId=${artistId}, page=${pageNumber}, numberOfSongsToFetch=${numberOfSongsToFetch}`);
+      console.info(`Fetching songs. artistId=${artist.id}, page=${pageNumber}, numberOfSongsToFetch=${numberOfSongsToFetch}`);
       page = await this._fetchPage(artist, pageNumber,
           numberOfSongsToFetch, filter);
       console.info(`Completed page fetch. results=${page?.length}`);

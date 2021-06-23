@@ -51,11 +51,9 @@ describe('SongService', ()=> {
   describe('_fetchSongs', ()=>{
     it('should fetch each song for an artist', async ()=>{
       const Client = sinon.mock(new Genius.Client());
-      const artistClient = new Genius.ArtistsClient();
-      Client.artists = artistClient;
+      Client.artists = new Genius.ArtistsClient();
 
       const artist = new Genius.Artist({}, '1234', null, {});
-      sinon.stub(artistClient, 'get').returns(artist);
 
       const expectedSongs = [{
         id: 'id',
@@ -65,7 +63,7 @@ describe('SongService', ()=> {
           .onCall(1).throws(new Error(Genius.Constants.NO_RESULT));
 
       const songService = new SongService(Client);
-      const songs = await songService._fetchSongs('1234');
+      const songs = await songService._fetchSongs(artist);
 
       expect(songs).to.deep.equal(expectedSongs);
     });
@@ -86,7 +84,7 @@ describe('SongService', ()=> {
           .throws(new Error(Genius.Constants.NO_RESULT));
 
       const songService = new SongService(Client);
-      const songs = await songService._fetchSongs('1234', 1);
+      const songs = await songService._fetchSongs(artist, 1);
 
       expect(songs).to.deep.equal(expectedSongs);
       expect(songsStub.getCalls()[0].args).to.deep.equal([{per_page: 1,
