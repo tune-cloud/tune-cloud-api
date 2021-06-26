@@ -17,7 +17,7 @@
   "dependencies": {
     "apollo-server": "2.25.2",
     "apollo-server-lambda": "2.25.2",
-    "aws-sdk": "2.934.0",
+    "aws-sdk": "2.935.0",
     "genius-lyrics": "4.2.9",
     "graphql": "15.5.1"
   },
