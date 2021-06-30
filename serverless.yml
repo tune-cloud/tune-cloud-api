@@ -68,149 +68,168 @@ resources:
         DashboardBody:
           |
           {
-          "widgets": [
-              {
-                  "height": 15,
-                  "width": 24,
-                  "y": 0,
-                  "x": 0,
-                  "type": "explorer",
-                  "properties": {
-                      "metrics": [
-                          {
-                              "metricName": "Count",
-                              "resourceType": "AWS::ApiGateway::RestApi",
-                              "stat": "Sum"
+              "widgets": [
+                  {
+                      "height": 15,
+                      "width": 24,
+                      "y": 0,
+                      "x": 0,
+                      "type": "explorer",
+                      "properties": {
+                          "metrics": [
+                              {
+                                  "metricName": "Count",
+                                  "resourceType": "AWS::ApiGateway::RestApi",
+                                  "stat": "Sum"
+                              },
+                              {
+                                  "metricName": "5XXError",
+                                  "resourceType": "AWS::ApiGateway::RestApi",
+                                  "stat": "Sum"
+                              },
+                              {
+                                  "metricName": "4XXError",
+                                  "resourceType": "AWS::ApiGateway::RestApi",
+                                  "stat": "Sum"
+                              },
+                              {
+                                  "metricName": "Latency",
+                                  "resourceType": "AWS::ApiGateway::RestApi",
+                                  "stat": "Average"
+                              },
+                              {
+                                  "metricName": "IntegrationLatency",
+                                  "resourceType": "AWS::ApiGateway::RestApi",
+                                  "stat": "Average"
+                              },
+                              {
+                                  "metricName": "CacheHitCount",
+                                  "resourceType": "AWS::ApiGateway::RestApi",
+                                  "stat": "Sum"
+                              },
+                              {
+                                  "metricName": "CacheMissCount",
+                                  "resourceType": "AWS::ApiGateway::RestApi",
+                                  "stat": "Sum"
+                              }
+                          ],
+                          "labels": [
+                              {
+                                  "key": "aws:cloudformation:stack-name",
+                                  "value": "tune-cloud-dev"
+                              }
+                          ],
+                          "widgetOptions": {
+                              "legend": {
+                                  "position": "bottom"
+                              },
+                              "view": "timeSeries",
+                              "stacked": false,
+                              "rowsPerPage": 50,
+                              "widgetsPerRow": 2
                           },
-                          {
-                              "metricName": "5XXError",
-                              "resourceType": "AWS::ApiGateway::RestApi",
-                              "stat": "Sum"
-                          },
-                          {
-                              "metricName": "4XXError",
-                              "resourceType": "AWS::ApiGateway::RestApi",
-                              "stat": "Sum"
-                          },
-                          {
-                              "metricName": "Latency",
-                              "resourceType": "AWS::ApiGateway::RestApi",
-                              "stat": "Average"
-                          },
-                          {
-                              "metricName": "IntegrationLatency",
-                              "resourceType": "AWS::ApiGateway::RestApi",
-                              "stat": "Average"
-                          },
-                          {
-                              "metricName": "CacheHitCount",
-                              "resourceType": "AWS::ApiGateway::RestApi",
-                              "stat": "Sum"
-                          },
-                          {
-                              "metricName": "CacheMissCount",
-                              "resourceType": "AWS::ApiGateway::RestApi",
-                              "stat": "Sum"
-                          }
-                      ],
-                      "labels": [
-                          {
-                              "key": "aws:cloudformation:stack-name",
-                              "value": "tune-cloud-dev"
-                          }
-                      ],
-                      "widgetOptions": {
-                          "legend": {
-                              "position": "bottom"
-                          },
-                          "view": "timeSeries",
+                          "period": 300,
+                          "splitBy": "",
+                          "region": "us-east-1",
+                          "title": "API Gateway Explorer"
+                      }
+                  },
+                  {
+                      "height": 6,
+                      "width": 24,
+                      "y": 15,
+                      "x": 0,
+                      "type": "log",
+                      "properties": {
+                          "query": "SOURCE '/aws/lambda/tune-cloud-dev-tune-cloud' | fields @timestamp, @message\n| parse @message \"artistId=*, artist=*, results\" as artistId,artist\n| filter ispresent(artistId)\n| stats count() as count by artistId, artist\n| sort by count desc",
+                          "region": "us-east-1",
                           "stacked": false,
-                          "rowsPerPage": 50,
-                          "widgetsPerRow": 2
-                      },
-                      "period": 300,
-                      "splitBy": "",
-                      "region": "us-east-1",
-                      "title": "API Gateway Explorer"
-                  }
-              },
-              {
-                  "height": 6,
-                  "width": 24,
-                  "y": 15,
-                  "x": 0,
-                  "type": "log",
-                  "properties": {
-                      "query": "SOURCE '/aws/lambda/tune-cloud-dev-tune-cloud' | fields @timestamp, @message\n| parse @message \"artistId=*, artist=*, results\" as artistId,artist\n| filter ispresent(artistId)\n| stats count() as count by artistId, artist\n| sort by count desc",
-                      "region": "us-east-1",
-                      "stacked": false,
-                      "title": "Artists",
-                      "view": "table"
-                  }
-              },
-              {
-                  "height": 6,
-                  "width": 24,
-                  "y": 21,
-                  "x": 0,
-                  "type": "log",
-                  "properties": {
-                      "query": "SOURCE '/aws/lambda/tune-cloud-dev-tune-cloud' | fields @timestamp, @message\n| parse @message \"query=*\" as query\n| filter ispresent(query)\n| stats count() as searches by query\n| sort by searches desc",
-                      "region": "us-east-1",
-                      "stacked": false,
-                      "title": "Searches",
-                      "view": "pie"
-                  }
-              },
-              {
-                  "height": 15,
-                  "width": 24,
-                  "y": 27,
-                  "x": 0,
-                  "type": "explorer",
-                  "properties": {
-                      "metrics": [
-                          {
-                              "metricName": "Invocations",
-                              "resourceType": "AWS::Lambda::Function",
-                              "stat": "Sum"
-                          },
-                          {
-                              "metricName": "Duration",
-                              "resourceType": "AWS::Lambda::Function",
-                              "stat": "Average"
-                          },
-                          {
-                              "metricName": "Errors",
-                              "resourceType": "AWS::Lambda::Function",
-                              "stat": "Sum"
-                          },
-                          {
-                              "metricName": "Throttles",
-                              "resourceType": "AWS::Lambda::Function",
-                              "stat": "Sum"
-                          }
-                      ],
-                      "labels": [
-                          {
-                              "key": "FunctionName",
-                              "value": "tune-cloud-dev-tune-cloud"
-                          }
-                      ],
-                      "widgetOptions": {
-                          "legend": {
-                              "position": "bottom"
-                          },
-                          "view": "timeSeries",
+                          "title": "Artists",
+                          "view": "table"
+                      }
+                  },
+                  {
+                      "height": 6,
+                      "width": 24,
+                      "y": 21,
+                      "x": 0,
+                      "type": "log",
+                      "properties": {
+                          "query": "SOURCE '/aws/lambda/tune-cloud-dev-tune-cloud' | fields @timestamp, @message\n| parse @message \"query=*\" as query\n| filter ispresent(query)\n| stats count() as searches by query\n| sort by searches desc",
+                          "region": "us-east-1",
                           "stacked": false,
-                          "rowsPerPage": 50,
-                          "widgetsPerRow": 2
-                      },
-                      "period": 300,
-                      "splitBy": "FunctionName",
-                      "region": "us-east-1",
-                      "title": "Lambda metrics"
+                          "title": "Searches",
+                          "view": "pie"
+                      }
+                  },
+                  {
+                      "height": 15,
+                      "width": 24,
+                      "y": 27,
+                      "x": 0,
+                      "type": "explorer",
+                      "properties": {
+                          "metrics": [
+                              {
+                                  "metricName": "Invocations",
+                                  "resourceType": "AWS::Lambda::Function",
+                                  "stat": "Sum"
+                              },
+                              {
+                                  "metricName": "Duration",
+                                  "resourceType": "AWS::Lambda::Function",
+                                  "stat": "Average"
+                              },
+                              {
+                                  "metricName": "Errors",
+                                  "resourceType": "AWS::Lambda::Function",
+                                  "stat": "Sum"
+                              },
+                              {
+                                  "metricName": "Throttles",
+                                  "resourceType": "AWS::Lambda::Function",
+                                  "stat": "Sum"
+                              }
+                          ],
+                          "labels": [
+                              {
+                                  "key": "FunctionName",
+                                  "value": "tune-cloud-dev-tune-cloud"
+                              }
+                          ],
+                          "widgetOptions": {
+                              "legend": {
+                                  "position": "bottom"
+                              },
+                              "view": "timeSeries",
+                              "stacked": false,
+                              "rowsPerPage": 50,
+                              "widgetsPerRow": 2
+                          },
+                          "period": 300,
+                          "splitBy": "FunctionName",
+                          "region": "us-east-1",
+                          "title": "Lambda metrics"
+                      }
+                  },
+                  {
+                      "type": "metric",
+                      "x": 0,
+                      "y": 42,
+                      "width": 12,
+                      "height": 3,
+                      "properties": {
+                          "metrics": [
+                              [ "TuneCloud/Errors", "LambdaErrors" ],
+                              [ ".", "LambdaLogErrors" ]
+                          ],
+                          "view": "singleValue",
+                          "stacked": true,
+                          "region": "us-east-1",
+                          "stat": "Sum",
+                          "period": 86400,
+                          "title": "Daily Errors"
+                      }
                   }
-              }
-            ]
-            }
+              ]
+          }
