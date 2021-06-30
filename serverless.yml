@@ -22,6 +22,29 @@ functions:
           cors: true
 resources:
   Resources:
+    ErrorMetricFilter:
+      Type: AWS::Logs::MetricFilter
+      Properties:
+        LogGroupName:
+          Ref: TuneDashcloudLogGroup
+        FilterPattern: "ERROR"
+        MetricTransformations:
+          - MetricValue: 1
+            MetricNamespace: "TuneCloud/Errors"
+            MetricName: "LambdaLogErrors"
+            DefaultValue: 0
+    ErrorLogAlarm:
+      Type: AWS::CloudWatch::Alarm
+      Properties:
+        AlarmName: TuneCloudLogErrors
+        AlarmDescription: "Alarm if log errors breaches threshold"
+        Namespace: "TuneCloud/Errors"
+        MetricName: LambdaLogErrors
+        Statistic: Sum
+        ComparisonOperator: "GreaterThanThreshold"
+        Threshold: 50
+        EvaluationPeriods: 1
+        Period: 300
     ErrorAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
