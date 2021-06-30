@@ -1,7 +1,7 @@
 # ![tune-cloud-logo](https://github.com/tune-cloud/tune-cloud-images/blob/main/logo.png?raw=true) Tune Cloud API [![Build and Deploy](https://github.com/tune-cloud/tune-cloud-api/actions/workflows/build.yml/badge.svg)](https://github.com/tune-cloud/tune-cloud-api/actions/workflows/build.yml) 
 GraphQL api to query song and artist information using the [Genius API.](https://genius.com/)
 
-## [Playground](https://nbl977s1aj.execute-api.us-east-1.amazonaws.com/dev/graphql)
+## [Playground](https://064dd0z3t3.execute-api.us-east-1.amazonaws.com/dev/graphql)
 
 # Build
 To build `tune-cloud-api` run the following command.
