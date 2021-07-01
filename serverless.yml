@@ -45,6 +45,8 @@ resources:
         Threshold: 50
         EvaluationPeriods: 1
         Period: 300
+        AlarmActions:
+          - Fn::ImportValue: "aws-alarms-SNSTopic"
     ErrorAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
@@ -60,6 +62,8 @@ resources:
         Threshold: 10
         EvaluationPeriods: 5
         Period: 60
+        AlarmActions:
+          - Fn::ImportValue: "aws-alarms-SNSTopic"
 
     Dashboard:
       Type: AWS::CloudWatch::Dashboard
