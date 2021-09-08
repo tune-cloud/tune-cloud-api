@@ -18,7 +18,7 @@
     "apollo-server": "3.3.0",
     "apollo-server-lambda": "3.3.0",
     "aws-sdk": "2.979.0",
-    "genius-lyrics": "^4.2.9",
+    "genius-lyrics": "4.2.9",
     "graphql": "15.5.2"
   },
   "devDependencies": {
