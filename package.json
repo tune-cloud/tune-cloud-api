@@ -22,7 +22,7 @@
     "graphql": "15.5.3"
   },
   "devDependencies": {
-    "@apollo/client": "3.4.10",
+    "@apollo/client": "3.4.11",
     "@cucumber/cucumber": "7.3.1",
     "chai": "4.3.4",
     "chai-as-promised": "7.1.1",
