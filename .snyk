@@ -24,4 +24,8 @@ ignore:
     - apollo-server > apollo-server-express > apollo-server-core > ws:
         reason: None given
         expires: '2021-06-28T12:48:21.945Z'
+  SNYK-JS-NTHCHECK-1586032:
+    - genius-lyrics > cheerio > cheerio-select > css-select > nth-check:
+        reason: None given
+        expires: '2021-10-22T14:32:02.515Z'
 patch: {}
