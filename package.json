@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "apollo-server": "3.4.0",
+    "apollo-server": "^3.4.1",
     "apollo-server-lambda": "3.4.0",
     "aws-sdk": "2.1010.0",
     "genius-lyrics": "4.2.9",
