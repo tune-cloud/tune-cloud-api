@@ -28,10 +28,10 @@ ignore:
     - genius-lyrics > cheerio > cheerio-select > css-select > nth-check:
         reason: None given
         expires: '2021-10-22T14:32:02.515Z'
-      cheerio > cheerio-select > css-select > nth-check:
+    - genius-lyrics > cheerio > cheerio-select > css-select > nth-check:
         reason: None given
         expires: '2022-02-11T02:16:20.398Z'
-    - genius-lyrics > cheerio > cheerio-select > css-select > nth-check:
+    - cheerio > cheerio-select > css-select > nth-check:
         reason: None given
         expires: '2022-02-11T02:16:20.398Z'
 patch: {}
