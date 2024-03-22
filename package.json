@@ -15,14 +15,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "apollo-server": "3.6.3",
-    "apollo-server-lambda": "3.6.3",
+    "apollo-server": "3.13.0",
+    "apollo-server-lambda": "3.13.0",
     "aws-sdk": "2.1067.0",
     "genius-lyrics": "4.2.9",
     "graphql": "16.3.0"
   },
   "devDependencies": {
-    "@apollo/client": "3.5.8",
+    "@apollo/client": "3.9.9",
     "@cucumber/cucumber": "7.3.2",
     "chai": "4.3.6",
     "chai-as-promised": "7.1.1",
